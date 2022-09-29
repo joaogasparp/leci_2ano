@@ -22,6 +22,25 @@ void show(const double d)
        << std::endl;
 }
 
+void show(const char c)
+{
+  cout << "char: "
+       << c
+       << std::endl;
+}
+
+void show(const int *a, std::ostream& o = std::cout)
+{
+  std::cout << "array: ";
+  o << "[";
+  for(int i = 0; i < 2; ++i)
+  {
+    o << a[i] << ", ";
+  }
+  o << a[2] << "]";
+    std::cout << std::endl;
+}
+
 void show(const char *s,const char *h = "string: ") // second argument with default value
 {
   cout << h
@@ -31,9 +50,12 @@ void show(const char *s,const char *h = "string: ") // second argument with defa
 
 int main(void)
 {
+  int a[3] = { 2,7,-1 };
   show(1.0);
   show("hello");
   show(-3);
   show("John","name: ");
+  show('a');
+  show(a);
   return 0;
 }

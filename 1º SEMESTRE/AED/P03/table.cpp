@@ -19,8 +19,8 @@ using namespace std; // make all symbols of the std namespace directly visible
 
 void do_it(int N)
 {
-  cout << " n n*n      sqrt(n)\n"
-       << "-- --- -----------------\n";
+  cout << "n  n*n sqrt(n)           cbrt(n)\n"
+       << "-- --- ----------------- -----------------\n";
   for(int i = 1;i <= N;i++)
   {
     cout << setw(2) << i
@@ -28,6 +28,8 @@ void do_it(int N)
          << setw(3) << i * i
          << " "
          << fixed << setw(17) << setprecision(15) << sqrt(double(i))
+         << " "
+         << fixed << setw(17) << setprecision(15) << cbrt(double(i))
          << endl;
 #if ALSO_USE_PRINTF != 0
     // same as above, but now using the printf function
@@ -38,5 +40,5 @@ void do_it(int N)
 
 int main(void)
 {
-  do_it(10);
+  do_it(90);
 }

@@ -9,5 +9,9 @@
 int main(void)
 {
   std::cout << "Hello world!\n"; // "same" as printf("Hello world\n");
-  //  return 0;  // main() returns 0 if no return value is given
+  for (int i = 1; i < 11; i++)
+  {
+    printf("%d\n", i);
+  }
+  return 0;
 }
