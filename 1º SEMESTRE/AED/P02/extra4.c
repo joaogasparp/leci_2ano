@@ -51,25 +51,26 @@ int* append(int *a1, size_t size1, int *a2, size_t size2){
     for(int i = 0; i < size2; i++)     
         c[i + size1] =a2[i];
 
+    printf("Merged ");
+
     display(c, size3);
 
-    return c;
+    return 0;
 }
 
 int main(void){
-    // size_t size1 = 3;
-    // int a1[3] = {1, 2, 3};
-    // display(a1, size1);
+    size_t size1 = 3;
+    int a1[3] = {1, 2, 3};
+    display(a1, size1);
 
-    // size_t size2 = 4;
-    // int a2[4] = {4, 5, 6, 7};
-    // display(a2, size2);
+    size_t size2 = 4;
+    int a2[4] = {4, 5, 6, 7};
+    display(a2, size2);
+
+    append(a1, size1, a2, size2);
 
     size_t size;
     read(&size);
     
-
-    append(a1, size1, a2, size2);
-
     return 0;
 }
