@@ -1,0 +1,28 @@
+
+// Display the contents of an array
+
+void Display(int* a, size_t size) { ... }
+
+Example:    Array = [ 1, 2, 3 ]
+
+
+
+// Read the size, create an array and read its elements
+// Condition: size > 0
+// Return NULL if memory allocation fails
+// Set *size to ZERO if memory allocation fails
+
+int* Read(size_t *size) { ... }
+
+
+
+// Create and return a new array 
+// storing the elements of array1 followed by the elements of array2
+// Pre-Conditions: size1 > 0 and size2 > 0
+// Return NULL if memory allocation fails
+
+int* Append(int* array1, size_t size1, int* array2, size_t size2) { ... }
+
+Example:    Array = [ 1, 2, 3 ]
+            Array = [ 4, 5, 6, 7 ]
+            Array = [ 1, 2, 3, 4, 5, 6, 7 ]
