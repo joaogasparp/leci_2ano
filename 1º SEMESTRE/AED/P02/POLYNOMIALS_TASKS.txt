@@ -1,0 +1,39 @@
+
+The coefficients of a degree n polynomial are stored in an array p of size (n + 1)
+-> p[0] is the coefficient of the largest degree term
+-> p[n] is the coefficient of the zero-degree term
+
+
+1 - Write a funtion to display a polynomial: 
+
+void DisplayPol(double* coef, unsigned int degree) { ... }
+
+Example:	Pol(x) = 1.000000 * x^2 + 4.000000 * x^1 + 1.000000
+
+
+
+2 - Write a function to read the coefficents from the keyboard.
+
+
+
+3 - Compute the value of Pol(x) using the Horner method:
+
+double ComputePol(double* coef, unsigned int degree, double x) { ... }
+
+Example: 	Pol(2.000000) = 13.000000
+
+
+4 - Compute the real roots, if any, of a second degree polynomial
+
+unsigned int 
+getRealRoots(double* coef, unsigned int degree, double* root1, double* root2) { ... }
+ 
+Return values:	0 -> no real roots
+		1 -> 1 real root with multiplicity 2
+		2 -> 2 distinct real roots
+
+Use assert(...) to validate the value of degree
+
+	 
+
+	
