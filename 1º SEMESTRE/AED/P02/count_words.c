@@ -55,6 +55,7 @@ static void free_tree(node *n)
   {
     free_tree(n->left);
     free_tree(n->right);
+    free(n->word);
     free(n);
   }
 }
@@ -75,6 +76,9 @@ static long count_different_words(node *n)
 
 static void list_words(node *n)
 {
+  if(n == NULL){
+    return;
+  }
   list_words(n->left);
   printf("%6ld %s\n",n->count,n->word);
   list_words(n->right);
@@ -100,7 +104,7 @@ int main(int argc,char **argv)
     fprintf(stderr,"\e[0m"); // normal output
     return 1;
   }
-  for(int i = 2;i <= argc;i++)
+  for(int i = 2;i < argc;i++)
   {
     // read text file
     FILE *fp = fopen(argv[i],"r");
@@ -117,8 +121,8 @@ int main(int argc,char **argv)
     // report
     switch(opt)
     {
-      case 'a': printf("The file %s contains %ld words\n",argv[i],count_all_words(root)); break;
-      case 'd': printf("The file %s contains %ld distinct words\n",argv[i],count_different_words(root)); break;
+      case 'a': printf("The file %s contains %ld words.\n",argv[i],count_all_words(root)); break;
+      case 'd': printf("The file %s contains %ld distinct words.\n",argv[i],count_different_words(root)); break;
       case 'l': printf("Contents of the file %s:\n",argv[i]); list_words(root); break;
     }
     // free memory
