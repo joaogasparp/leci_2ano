@@ -8,10 +8,17 @@
 
 int main(void)
 {
-  std::cout << "Hello world!\n"; // "same" as printf("Hello world\n");
-  for (int i = 1; i < 11; i++)
+  int x = 0;
+  char nome[30];
+
+  std::cout << "Digita um número: ";
+
+  std::cin >> x;
+
+  for(int i = 1; i < x+1; i++)
   {
-    printf("%d\n", i);
+    std::cout << i << "\n";
   }
+
   return 0;
 }
