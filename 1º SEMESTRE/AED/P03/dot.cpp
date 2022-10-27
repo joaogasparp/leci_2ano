@@ -22,6 +22,7 @@ class dot
     void set_y(double y) { this->y = y; };
     dot operator + (dot &d) { return dot(this->x + d.x,this->y + d.y); }
 };
+
 std::ostream & operator << (std::ostream &os,dot &d)
 {
   return os << "(" << d.get_x() << "," << d.get_y() << ")\n";
