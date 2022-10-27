@@ -16,7 +16,7 @@ using namespace std;
 //          homework: to this!
 //
 
-template <typename T,int max_size>
+template <typename T,int max_size> 
 class stack
 {
   private:
