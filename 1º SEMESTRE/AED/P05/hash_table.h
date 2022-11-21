@@ -107,7 +107,15 @@ unsigned int hash_function(const char *str)
 
 hash_table_node *find_hash_table_node(char key[64])
 {
-  // place your code here
+  unsigned int index = hash_function(key);
+  hash_table_node *p = hash_table[index];
+  if (p == NULL){
+    return NULL;
+  }
+  while((p != NULL) && (strcmp(p -> key,key) != 0)){
+    p = p -> next;
+  }
+  return p;  
 }
 
 
@@ -125,5 +133,7 @@ hash_table_node *find_hash_table_node(char key[64])
 
 void insert_hash_table_node(hash_table_node *n)
 {
-  // place your code here
+  unsigned int index = hash_function(n -> key);
+  n -> next = hash_table[index];
+  hash_table[index] = n;
 }

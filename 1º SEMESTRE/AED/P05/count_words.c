@@ -17,13 +17,17 @@
 
 #include "hash_table.h"
 
-
-//
-// complete the register_word function (count this word)
-//
-
 void register_word(char word[64])
 {
+  hash_table_node *p = find_hash_table_node(word);
+  if (p != NULL){
+    p -> value++;
+  } else{
+    p = allocate_hash_table_node();
+    p -> value = 1;
+    strcpy(p -> key,word);
+    insert_hash_table_node(p);
+  }
 }
 
 
@@ -79,9 +83,14 @@ int main(int argc,char **argv)
     // close file
     //
     fclose(fp);
-    //
-    // place your code to print the words and respective number of occurrences here
-    //
+    
+    for(i=0; i < hash_table_size;i++){
+      p = hash_table[i];
+      while(p != NULL){
+        printf("%s : %d", p -> key, p -> value);
+        p = p->next;
+      }
+    }
 
   }
   return 0;
