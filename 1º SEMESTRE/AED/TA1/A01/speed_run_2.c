@@ -192,7 +192,6 @@ int main(int argc,char *argv[argc + 1])
       printf("                                |");
     }
     // second solution method (less bad)
-    // ...
 
     // done
     printf("\n");
