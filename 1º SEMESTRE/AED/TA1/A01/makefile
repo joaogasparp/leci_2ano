@@ -14,6 +14,12 @@ speed_run:		speed_run.c make_custom_pdf.c
 speed_run_with_zlib:	speed_run.c make_custom_pdf.c
 	cc -Wall -O2 -D_use_zlib_=1 speed_run.c -o speed_run_with_zlib -lm -lz
 
+speed_run_2:		speed_run_2.c make_custom_pdf.c
+	cc -Wall -O2 -D_use_zlib_=0 speed_run_2.c -o speed_run_2 -lm
+
+speed_run_2_with_zlib:	speed_run_2.c make_custom_pdf.c
+	cc -Wall -O2 -D_use_zlib_=1 speed_run_2.c -o speed_run_2_with_zlib -lm -lz
+
 
 solution_speed_run:		solution_speed_run.c make_custom_pdf.c
 	cc -Wall -O2 -D_use_zlib_=0 solution_speed_run.c -o solution_speed_run -lm
