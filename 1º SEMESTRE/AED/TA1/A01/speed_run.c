@@ -94,7 +94,7 @@ static void solution_1_recursion(int move_number,int position,int speed,int fina
     return;
   }
   // no, try all legal speeds
-  for(new_speed = speed - 1;new_speed <= speed + 1;new_speed++)
+  for(new_speed = speed - 1;new_speed <= speed + 1;new_speed++)  
     if(new_speed >= 1 && new_speed <= _max_road_speed_ && position + new_speed <= final_position)
     {
       for(i = 0;i <= new_speed && new_speed <= max_road_speed[position + i];i++)
