@@ -24,6 +24,10 @@ def handle_client_connection(client_socket,address):
                 pkt=struct.unpack('!BLL20s',request)
                 print(pkt)
                 print('Received ver: {}, order: {}, size: {} -> {}'.format(pkt[0],pkt[1],pkt[2],pkt[3].decode()))
+                msg=pkt[3].decode()
+                print('Received {}'.format(msg))
+                msg=('ECHO: ' + msg).encode()
+                client_socket.send(msg)
     except (socket.timeout, socket.error):
         print('Client {} error. Done!'.format(address))
 
