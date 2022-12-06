@@ -17,9 +17,6 @@ int check_parenthesis(const char *s)
   for(int i = 0;s[i] != '\0';i++){
     if()
   }
-
-
-
 }  
 
 int main(int argc,char **argv)
