@@ -20,7 +20,7 @@
 #define _max_road_size_  800  // the maximum problem size
 #define _min_road_speed_   2  // must not be smaller than 1, shouldnot be smaller than 2
 #define _max_road_speed_   9  // must not be larger than 9 (only because of the PDF figure)
-
+//#define C_MAX 50
 
 //
 // include files --- as this is a small project, we include the PDF generation code directly from make_custom_pdf.c
@@ -30,7 +30,6 @@
 #include <stdio.h>
 #include "../P02/elapsed_time.h"
 #include "make_custom_pdf.c"
-
 
 //
 // road stuff
@@ -54,7 +53,6 @@ static void init_road_speeds(void)
   }
 }
 
-
 //
 // description of a solution
 //
@@ -66,52 +64,74 @@ typedef struct
 }
 solution_t;
 
-typedef struct tree_node
+typedef struct hash_data
 {
-  struct tree_node *left;
-  struct tree_node *right;
-  struct tree_node *down;
-  int data;
-  int move_number;
-  int position;
-  int speed;
-  int final_position; 
-}
-tree_node;
+    struct hash_data *next;
+    
+    int move_number;
+    int position;
+    int speed;
+    int final_position; 
 
-void insert_recursive(tree_node **link,tree_node *parent,int data)
-{
-  if(*link == NULL)
-    *link = new_tree_node(data,parent);
-  else if(data <= (*link)->data)
-    insert_recursive(&((*link)->left),*link,data);
-  else
-    insert_recursive(&((*link)->right),*link,data);
 }
+hash_data;
 
-tree_node *search_recursive(tree_node *link,int data)
-{
-  if(link == NULL || link->data == data)
-    return link;
-  if(data < link->data)
-    return search_recursive(link->left,data);
-  else
-    return search_recursive(link->right,data);
+//#define PRINT_COLLISIONS
+#define hash_size 10000000u
+static hash_data *hash_table[hash_size];
+
+static unsigned int hash(int move_number,int position,int speed,int final_position){
+  // 0 - hash_size-1;
+
+  // X % Y (0, Y-1)
+  //return (move_number *3+ position*5 + speed*7 + final_position) % hash_size;
+  return (move_number *61+ position*2253 + speed*1234 + final_position) % hash_size;
 }
 
-void traverse_in_order_recursive(tree_node *link)
+
+static void init_hash_table(void)
 {
-  if(link != NULL)
-  {
-    traverse_in_order_recursive(link->left);
-    visit(link);
-    traverse_in_order_recursive(link->right);
+    for(unsigned int idx = 0u; idx < hash_size ; idx++)
+        hash_table[idx] = NULL;
+}
+
+static hash_data *new_hash_data(int move_number,int position,int speed,int final_position){
+  hash_data *hd = (hash_data *)malloc(sizeof(hash_data));
+  hd->next = NULL;
+  hd->move_number = move_number;
+  hd->position = position;
+  hd->speed = speed;
+  hd->final_position = final_position;
+  if(hd == NULL){
+    fprintf(stderr,"Out of memory\n");
+    exit(1);
   }
+  return hd;
 }
 
-//
-// the (very inefficient) recursive solution given to the students
-//
+static void add_to_table(int move_number,int position,int speed,int final_position){
+  // só corre com a garantia que já existe um nó na tabela
+  
+  // get the linked list at idx position
+  unsigned int idx = hash(move_number, position, speed, final_position);
+  hash_data *hd = hash_table[idx];
+
+  // add the new solution to the linked list
+  hash_data *new_hd = new_hash_data(move_number, position, speed, final_position);
+  
+  new_hd->next = hd;
+
+  hash_table[idx] = new_hd;
+}
+
+static hash_data *find_data(int move_number,int position,int speed,int final_position)
+{
+    unsigned int idx = hash(move_number, position, speed, final_position);
+    hash_data *hd = hash_table[idx];
+    while(hd != NULL && !(move_number==hd->move_number && position==hd->position && speed==hd->speed && final_position==hd->final_position))
+        hd = hd -> next;
+    return hd;
+}
 
 static solution_t solution_1,solution_1_best;
 static double solution_1_elapsed_time; // time it took to solve the problem
@@ -124,10 +144,10 @@ static void solution_1_recursion(int move_number,int position,int speed,int fina
   // record move
   solution_1_count++;
   solution_1.positions[move_number] = position;
-  // is it a solution?
+  // terminal condition
   if(position == final_position && speed == 1)
   {
-    // is it a better solution?
+
     if(move_number < solution_1_best.n_moves)
     {
       solution_1_best = solution_1;
@@ -135,19 +155,28 @@ static void solution_1_recursion(int move_number,int position,int speed,int fina
     }
     return;
   }
-  // no, try all legal speeds
-  for(new_speed = speed - 1;new_speed <= speed + 1;new_speed++)  
+
+  for(new_speed = speed - 1;new_speed <= speed + 1;new_speed++)
     if(new_speed >= 1 && new_speed <= _max_road_speed_ && position + new_speed <= final_position)
     {
-      for(i = 0;i <= new_speed && new_speed <= max_road_speed[position + i];i++)
-        ;
-      if(i > new_speed)
-        solution_1_recursion(move_number + 1,position + new_speed,new_speed,final_position);
+      
+      for(i = 0;i <= new_speed && new_speed <= max_road_speed[position + i];i++);
+      //
+      //fprintf(stderr,"speed %d, i %d\n",new_speed, i);
+      if(i > new_speed){
+        
+        if (find_data(move_number + 1, position + new_speed,new_speed,final_position)==NULL){
+          add_to_table(move_number + 1, position + new_speed,new_speed,final_position);
+          solution_1_recursion(move_number + 1, position + new_speed,new_speed,final_position);
+        }
+        
+      }
     }
 }
 
 static void solve_1(int final_position)
 {
+  init_hash_table();
   if(final_position < 1 || final_position > _max_road_size_)
   {
     fprintf(stderr,"solve_1: bad final_position\n");
@@ -158,6 +187,9 @@ static void solve_1(int final_position)
   solution_1_best.n_moves = final_position + 100;
   solution_1_recursion(0,0,0,final_position);
   solution_1_elapsed_time = cpu_time() - solution_1_elapsed_time;
+  #ifdef PRINT_COLLISIONS
+  print_number_collisions();
+  #endif
 }
 
 
@@ -206,35 +238,34 @@ int main(int argc,char *argv[argc + 1])
   srandom((unsigned int)n_mec);
   init_road_speeds();
   // run all solution methods for all interesting sizes of the problem
-  final_position = 1;
+  final_position = 1;//C_MAX;
   solution_1_elapsed_time = 0.0;
   printf("    + --- ---------------- --------- +\n");
   printf("    |                plain recursion |\n");
   printf("--- + --- ---------------- --------- +\n");
   printf("  n | sol            count  cpu time |\n");
   printf("--- + --- ---------------- --------- +\n");
-  while(final_position <= _max_road_size_/* && final_position <= 20*/)
+  while(final_position <= _max_road_size_ /*&& final_position <= C_MAX*/)
   {
     print_this_one = (final_position == 10 || final_position == 20 || final_position == 50 || final_position == 100 || final_position == 200 || final_position == 400 || final_position == 800) ? 1 : 0;
     printf("%3d |",final_position);
-    // first solution method (very bad)
+
     if(solution_1_elapsed_time < _time_limit_)
     {
       solve_1(final_position);
       if(print_this_one != 0)
       {
-        sprintf(file_name,"%03d_1.pdf",final_position);
+        sprintf(file_name,"%03d_2.pdf",final_position);
         make_custom_pdf_file(file_name,final_position,&max_road_speed[0],solution_1_best.n_moves,&solution_1_best.positions[0],solution_1_elapsed_time,solution_1_count,"Plain recursion");
       }
       printf(" %3d %16lu %9.3e |",solution_1_best.n_moves,solution_1_count,solution_1_elapsed_time);
+      //printf(" %3d |",solution_1_best.n_moves);
     }
     else
     {
       solution_1_best.n_moves = -1;
       printf("                                |");
     }
-    // second solution method (less bad)
-    // ...
 
     // done
     printf("\n");
