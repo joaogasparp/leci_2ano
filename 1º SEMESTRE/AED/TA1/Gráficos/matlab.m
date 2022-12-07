@@ -10,7 +10,7 @@ plot(md1,md2); % criar plot
 xlabel('n','FontSize',10); % legendar eixo dos x
 ylabel('cpu-time','FontSize',10); % legendar eixo dos y
 title('Solução Fornecida - Nº Mec. 107708'); % dar título
-xlim([38 50]); % limitar eixo dos x
+xlim([0 50]); % limitar eixo dos x
 ylim([0 1200]); % limitar eixo dos y
 p1 = polyfit(md1,md2,4); % encontrar fórmula com 4 coeficientes
 val1 = polyval(p1,800); % calcular valor para 800
