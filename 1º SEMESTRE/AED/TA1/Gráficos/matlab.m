@@ -1,3 +1,4 @@
+
 %%%%%% solucao fornecida
 
 fileID = fopen('speedrun_3600_original.txt');
@@ -7,7 +8,7 @@ md2 = mydata{1,2}; % coluna cpu-time
 fclose(fileID);
 figure(1);
 plot(md1,md2,'Marker','.','LineStyle','none','Color','b'); % criar plot
-h1 = lsline;
+h1 = lsline; % reta de ajuste
 h1.Color = 'r';
 xlabel('n','FontSize',10); % legendar eixo dos x
 ylabel('cpu-time','FontSize',10); % legendar eixo dos y
@@ -20,10 +21,10 @@ val1 = polyval(p1,800); % calcular valor para 800
 %%%%%% prova formula
 
 n = 38:1:50;
-p1 = 0.179683515012509*n.^4 - 29.874161695810340*n.^3 + (1.862710731929421e+03)*n.^2 - (5.161081233702307e+04)*n + 5.360544850625902e+05;
+p1 = 0.179683515012509*n.^4-29.874161695810340*n.^3+(1.862710731929421e+03)*n.^2-(5.161081233702307e+04)*n+5.360544850625902e+05;
 figure(2);
 plot(md1,md2,'Marker','.','LineStyle','none','Color','b'); % criar plot
-h1 = lsline;
+h1 = lsline; % reta de ajuste
 h1.Color = 'r';
 xlabel('n','FontSize',10);
 ylabel('cpu-time','FontSize',10);
@@ -39,7 +40,7 @@ md2 = mydata{1,2}; % coluna cpu-time
 fclose(fileID);
 figure(3);
 plot(md1,md2,'Marker','.','LineStyle','none','Color','b'); % criar plot
-h1 = lsline;
+h1 = lsline; % reta de ajuste
 h1.Color = 'r';
 xlabel('n','FontSize',10); % legendar eixo dos x
 ylabel('cpu-time','FontSize',10); % legendar eixo dos y
@@ -54,7 +55,7 @@ md2 = mydata{1,2}; % coluna cpu-time
 fclose(fileID);
 figure(4);
 plot(md1,md2,'Marker','.','LineStyle','none','Color','b'); % criar plot
-h1 = lsline;
+h1 = lsline; % reta de ajuste
 h1.Color = 'r';
 xlabel('n','FontSize',10); % legendar eixo dos x
 ylabel('cpu-time','FontSize',10); % legendar eixo dos y
