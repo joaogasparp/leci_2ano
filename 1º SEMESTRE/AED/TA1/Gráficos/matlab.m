@@ -28,7 +28,7 @@ title('Prova da Equação')
 
 %%%%%% solucao 1
 
-fileID = fopen('speedrun_our.txt');
+fileID = fopen('speedrun_our_1.txt');
 mydata = textscan(fileID,'%f%f'); % separar as duas colunas por tab
 md1 = mydata{1,1}; % coluna n
 md2 = mydata{1,2}; % coluna cpu-time
@@ -37,4 +37,17 @@ figure(3);
 plot(md1,md2); % criar plot
 xlabel('n','FontSize',10); % legendar eixo dos x
 ylabel('cpu-time','FontSize',10); % legendar eixo dos y
-title('Valores obtidos - Nº Mec. 107708');
+title('Valores Obtidos (Sol. 1) - Nº Mec. 107708');
+
+%%%%%% solucao 2
+
+fileID = fopen('speedrun_our_2.txt');
+mydata = textscan(fileID,'%f%f'); % separar as duas colunas por tab
+md1 = mydata{1,1}; % coluna n
+md2 = mydata{1,2}; % coluna cpu-time
+fclose(fileID);
+figure(4);
+plot(md1,md2); % criar plot
+xlabel('n','FontSize',10); % legendar eixo dos x
+ylabel('cpu-time','FontSize',10); % legendar eixo dos y
+title('Valores Obtidos (Sol. 2) - Nº Mec. 107708');
