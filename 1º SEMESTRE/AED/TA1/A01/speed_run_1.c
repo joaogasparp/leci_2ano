@@ -67,12 +67,10 @@ solution_t;
 typedef struct hash_data
 {
     struct hash_data *next;
-    
     int move_number;
     int position;
     int speed;
     int final_position; 
-
 }
 hash_data;
 
@@ -147,7 +145,7 @@ static void solution_1_recursion(int move_number,int position,int speed,int fina
   // terminal condition
   if(position == final_position && speed == 1)
   {
-
+    // is it a better solution?
     if(move_number < solution_1_best.n_moves)
     {
       solution_1_best = solution_1;
@@ -155,21 +153,21 @@ static void solution_1_recursion(int move_number,int position,int speed,int fina
     }
     return;
   }
+  // no, try all legal speeds
+  if(solution_1_best.positions[move_number] > solution_1.positions[move_number]){
+    return;
+  }
 
-  for(new_speed = speed - 1;new_speed <= speed + 1;new_speed++)
+  for(new_speed = speed + 1;new_speed >= speed - 1;new_speed--)
     if(new_speed >= 1 && new_speed <= _max_road_speed_ && position + new_speed <= final_position)
     {
-      
       for(i = 0;i <= new_speed && new_speed <= max_road_speed[position + i];i++);
-      //
-      //fprintf(stderr,"speed %d, i %d\n",new_speed, i);
+      // fprintf(stderr,"speed %d, i %d\n",new_speed, i);
       if(i > new_speed){
-        
         if (find_data(move_number + 1, position + new_speed,new_speed,final_position)==NULL){
           add_to_table(move_number + 1, position + new_speed,new_speed,final_position);
           solution_1_recursion(move_number + 1, position + new_speed,new_speed,final_position);
         }
-        
       }
     }
 }

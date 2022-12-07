@@ -75,10 +75,6 @@ static solution_t solution_1,solution_1_best;
 static double solution_1_elapsed_time; // time it took to solve the problem
 static unsigned long solution_1_count; // effort dispended solving the problem
 
-static solution_t solution_1,solution_1_best;
-static double solution_1_elapsed_time; // time it took to solve the problem
-static unsigned long solution_1_count; // effort dispended solving the problem
-
 static void solution_1_recursion(int move_number,int position,int speed,int final_position)
 {
   int i,new_speed;
@@ -98,7 +94,7 @@ static void solution_1_recursion(int move_number,int position,int speed,int fina
     return;
   }
   // no, try all legal speeds
-    if(solution_1_best.positions[move_number] > solution_1.positions[move_number]){
+  if(solution_1_best.positions[move_number] > solution_1.positions[move_number]){
     return;
   }
 
