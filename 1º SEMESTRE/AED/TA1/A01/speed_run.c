@@ -9,7 +9,7 @@
 //   cc -Wall -O2 -D_use_zlib_=1 solution_speed_run.c -lm -lz
 //
 // Place your student numbers and names here
-//   N.Mec. XXXXXX  Name: XXXXXXX
+//   N.Mec. 108352  Name: Gonçalo Cunha
 //
 
 
@@ -46,7 +46,7 @@ static void init_road_speeds(void)
   for(i = 0;i <= _max_road_size_;i++)
   {
     speed = (double)_max_road_speed_ * (0.55 + 0.30 * sin(0.11 * (double)i) + 0.10 * sin(0.17 * (double)i + 1.0) + 0.15 * sin(0.19 * (double)i));
-    max_road_speed[i] = (int)floor(0.5 + speed) + (int)((unsigned int)random() % 3u) - 1;
+    max_road_speed[i] = (int)floor(0.5 + speed) + (int)((unsigned int)rand() % 3u) - 1;
     if(max_road_speed[i] < _min_road_speed_)
       max_road_speed[i] = _min_road_speed_;
     if(max_road_speed[i] > _max_road_speed_)
@@ -75,6 +75,10 @@ static solution_t solution_1,solution_1_best;
 static double solution_1_elapsed_time; // time it took to solve the problem
 static unsigned long solution_1_count; // effort dispended solving the problem
 
+static solution_t solution_1,solution_1_best;
+static double solution_1_elapsed_time; // time it took to solve the problem
+static unsigned long solution_1_count; // effort dispended solving the problem
+
 static void solution_1_recursion(int move_number,int position,int speed,int final_position)
 {
   int i,new_speed;
@@ -94,7 +98,11 @@ static void solution_1_recursion(int move_number,int position,int speed,int fina
     return;
   }
   // no, try all legal speeds
-  for(new_speed = speed - 1;new_speed <= speed + 1;new_speed++)  
+    if(solution_1_best.positions[move_number] > solution_1.positions[move_number]){
+    return;
+  }
+
+  for(new_speed = speed + 1;new_speed >= speed - 1;new_speed--)
     if(new_speed >= 1 && new_speed <= _max_road_speed_ && position + new_speed <= final_position)
     {
       for(i = 0;i <= new_speed && new_speed <= max_road_speed[position + i];i++)
@@ -127,7 +135,7 @@ static void example(void)
 {
   int i,final_position;
 
-  srandom(0xAED2022);
+  srand(0xAED2022);
   init_road_speeds();
   final_position = 30;
   solve_1(final_position);
@@ -161,7 +169,7 @@ int main(int argc,char *argv[argc + 1])
   }
   // initialization
   n_mec = (argc < 2) ? 0xAED2022 : atoi(argv[1]);
-  srandom((unsigned int)n_mec);
+  srand((unsigned int)n_mec);
   init_road_speeds();
   // run all solution methods for all interesting sizes of the problem
   final_position = 1;
@@ -209,5 +217,5 @@ int main(int argc,char *argv[argc + 1])
   }
   printf("--- + --- ---------------- --------- +\n");
   return 0;
-# undef _time_limit_
+#undef _time_limit_
 }
