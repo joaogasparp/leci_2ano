@@ -75,10 +75,6 @@ static solution_t solution_1,solution_1_best;
 static double solution_1_elapsed_time; // time it took to solve the problem
 static unsigned long solution_1_count; // effort dispended solving the problem
 
-static solution_t solution_1,solution_1_best;
-static double solution_1_elapsed_time; // time it took to solve the problem
-static unsigned long solution_1_count; // effort dispended solving the problem
-
 static void solution_1_recursion(int move_number,int position,int speed,int final_position)
 {
   int i,new_speed;
