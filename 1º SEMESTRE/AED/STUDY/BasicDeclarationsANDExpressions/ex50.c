@@ -1,20 +1,22 @@
 #include <stdio.h>
 
+#define MAX 5
+
 int main(void){
-    int array[5], min, j;
+    int i;
+    float array[5];
 
     printf("Input the 5 members of the array:\n");
 
-    for (int i = 0; i <= 4; i++)
-    {
-        scanf("%d", &array[i]);
-        if(array[i] < array[i-1]){
-            j = i;
-            min = array[i];
-        }
+    for(i = 0; i < 5; i++){
+        scanf("%e", &array[i]);
     }
 
-    printf("A[%d] = %.1f",j,(float)min);
+    for(i = 0; i < 5; i++){
+        if(array[i] < MAX){
+            printf("A[%d] = %.1f\n",i,array[i]);
+        }
+    }
 
     return 0;
 }
