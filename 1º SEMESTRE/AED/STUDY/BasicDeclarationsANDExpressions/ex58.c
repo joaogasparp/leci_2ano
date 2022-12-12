@@ -14,10 +14,9 @@ int main(void){
     for (i = 1; i < 4; i++){
         if(min > array[i]){
             min = array[i];
-            if(max < array[i]){
+        }else if(max < array[i]){
                 max = array[i];
-            }
-        }
+        }  
     }
     
     dif = (float)max - (float)min;
