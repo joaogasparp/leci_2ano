@@ -176,6 +176,14 @@ static hash_table_t *hash_table_create(void)
 
 static void hash_table_grow(hash_table_t *hash_table)
 {
+  // ----
+  // load-factor -> 60%
+  // allocate 
+  // new hash array
+  // 2 loops: atravessar o array e atravessar cada lista
+  // índice no novo array para cada nó -> necessário hash value 
+  // colcoar no início da correspondente lista
+  // ----
   //
   // complete this
   //
@@ -183,6 +191,13 @@ static void hash_table_grow(hash_table_t *hash_table)
 
 static void hash_table_free(hash_table_t *hash_table)
 {
+  // ----
+  // 2 clicos -> percorrer o array; percorrer a lista associada a cada elemento
+  // libertar memória do grafo e da union_find
+  // libertar o nó
+  // libertar a memória do array
+  // libertar memória do cabeçalho
+  // ----
   //
   // complete this
   //
@@ -204,7 +219,6 @@ static hash_table_node_t *find_word(hash_table_t *hash_table,const char *word,in
   // se palavra demasiado grande -> EXIT erro!!
   // colocar nó de HT e verificar ponteiro, EXIT se falhar!!
   // copiar palavra para o nó -> usar strncpy (vários argumentos, saber qual usar)
-  // 
   // ----
   //
   // complete this
