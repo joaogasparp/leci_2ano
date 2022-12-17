@@ -3,7 +3,7 @@
 int main(void){
     enum week{Sun, Mon, Tue, Wed, Thu, Fri, Sat};
     printf("Sun = %d", Sun);
-    printf("\nMon = %d", Mon);
+    printf("\nMon = %d", Mon); 
     printf("\nTue = %d", Tue);
     printf("\nWed = %d", Wed);
     printf("\nThu = %d", Thu);
