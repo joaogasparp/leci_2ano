@@ -168,9 +168,17 @@ static hash_table_t *hash_table_create(void)
     fprintf(stderr,"create_hash_table: out of memory\n");
     exit(1);
   }
-  //
-  // complete this
-  //
+  hash_table->hash_table_size = 200;
+  hash_table->number_of_entries = 0;
+  hash_table->number_of_edges = 0;
+  hash_table->heads = (hash_table_node_t **)malloc(hash_table->hash_table_size * sizeof(hash_table_node_t *));
+  if(hash_table->heads == NULL){
+    fprintf(stderr, "create_hash_table: out of memory\n");
+    exit(1);
+  }
+  for(i = 0; hash_table->hash_table_size; i++){
+    hash_table->heads[i] == NULL;
+  }
   return hash_table;
 }
 
@@ -191,6 +199,17 @@ static void hash_table_grow(hash_table_t *hash_table)
 
 static void hash_table_free(hash_table_t *hash_table)
 {
+  int i;
+  for(i = 0; hash_table->hash_table_size; i++){
+    if(hash_table->heads[i] != NULL){
+      while (/* condition */)
+      {
+        /* code */
+      }
+      
+      
+    }
+  }
   // ----
   // 2 clicos -> percorrer o array; percorrer a lista associada a cada elemento
   // libertar memória do grafo e da union_find
@@ -201,6 +220,7 @@ static void hash_table_free(hash_table_t *hash_table)
   //
   // complete this
   //
+  free(hash_table->heads);
   free(hash_table);
 }
 
@@ -252,13 +272,11 @@ static void add_edge(hash_table_t *hash_table,hash_table_node_t *from,const char
   //
 }
 
-
 //
 // generates a list of similar words and calls the function add_edge for each one (done)
 //
 // man utf8 for details on the uft8 encoding
 //
-
 static void break_utf8_string(const char *word,int *individual_characters)
 {
   int byte0,byte1;
