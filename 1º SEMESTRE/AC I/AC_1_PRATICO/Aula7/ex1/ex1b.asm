@@ -14,5 +14,6 @@ main:	addiu $sp,$sp,-4
 	syscall
 	
 	lw $ra,0($sp)
+	addiu $sp,$sp,4
 	
-	jr $ra
+	jr $ra 

@@ -12,7 +12,9 @@ main:	addiu $sp,$sp,-4
 	move $a0,$v0
 	li $v0,print_int10
 	syscall
+	li $v0,0
 	
 	lw $ra,0($sp)
+	addiu $sp,$sp,4
 	
 	jr $ra

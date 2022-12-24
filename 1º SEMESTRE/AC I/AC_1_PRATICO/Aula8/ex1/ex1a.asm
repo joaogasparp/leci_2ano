@@ -18,5 +18,4 @@ while: 	lb $t0,0($a0) # while(*s >= ...)
 	add $v0,$v0,$t1 # res = 10 * res + digit;
 	j while # }
 	
-endw:	move $v0,$v0
-	jr $ra # termina sub-rotina
+endw:	jr $ra # termina sub-rotina
