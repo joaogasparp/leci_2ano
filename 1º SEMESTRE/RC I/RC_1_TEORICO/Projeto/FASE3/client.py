@@ -9,13 +9,13 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 print('Press Ctrl+C to exit...')
 
-ip_addr = "120.100.20.10"
+HOST = socket.gethostbyname(socket.gethostname())
 ip_name = socket.gethostname()
-tcp_port = 5005
+PORT = 5005
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect((ip_addr, tcp_port))
+sock.connect((HOST, PORT))
 
-print('Hostname: {} | IP Address: {}'.format(ip_name,ip_addr))
+print('Hostname: {} | IP Address: {}'.format(ip_name,HOST))
 
 while True:
     try:
