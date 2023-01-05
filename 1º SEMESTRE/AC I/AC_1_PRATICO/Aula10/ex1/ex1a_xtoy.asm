@@ -1,9 +1,9 @@
 # Mapa de registos:
-# x: $s0
+# x: 
 # y: 
 # i: $s1
-# result: $f4 
-# abs(y): $v0
+# result: 
+# abs(y): 
 	.data
 one:	.float 1.0
 	.text
