@@ -8,13 +8,13 @@
 //
 // Do as much as you can
 //   1) MANDATORY: complete the hash table code
-//      *) hash_table_create
-//      *) hash_table_grow
-//      *) hash_table_free
+//      *) hash_table_create          DONE
+//      *) hash_table_grow            
+//      *) hash_table_free            DONE
 //      *) find_word
 //      +) add code to get some statistical data about the hash table
 //   2) HIGHLY RECOMMENDED: build the graph (including union-find data) -- use the similar_words function...
-//      *) find_representative
+//      *) find_representative        DONE
 //      *) add_edge
 //   3) RECOMMENDED: implement breadth-first search in the graph
 //      *) breadh_first_search
@@ -62,7 +62,7 @@ typedef struct hash_table_s      hash_table_t;
 
 struct adjacency_node_s
 {
-  adjacency_node_t *next;            // link to th enext adjacency list node
+  adjacency_node_t *next;            // link to the next adjacency list node
   hash_table_node_t *vertex;         // the other vertex
 };
 
@@ -199,27 +199,17 @@ static void hash_table_grow(hash_table_t *hash_table)
 
 static void hash_table_free(hash_table_t *hash_table)
 {
-  int i;
-  for(i = 0; hash_table->hash_table_size; i++){
+  for(int i = 0; i < hash_table->hash_table_size;i++){
     if(hash_table->heads[i] != NULL){
-      while (/* condition */)
-      {
-        /* code */
+      hash_table_node_t *node = hash_table->heads[i];
+      while(node != NULL){
+        hash_table_node_t *next_node = node->next;
+        free(node);
+        node = next_node;
       }
-      
-      
     }
   }
-  // ----
-  // 2 clicos -> percorrer o array; percorrer a lista associada a cada elemento
-  // libertar memória do grafo e da union_find
-  // libertar o nó
-  // libertar a memória do array
-  // libertar memória do cabeçalho
-  // ----
-  //
-  // complete this
-  //
+
   free(hash_table->heads);
   free(hash_table);
 }
@@ -255,9 +245,14 @@ static hash_table_node_t *find_representative(hash_table_node_t *node)
 {
   hash_table_node_t *representative,*next_node;
 
-  //
-  // complete this
-  //
+  for(representative = node; representative != representative->representative; representative = representative->representative)
+    ;
+
+  for( ; node != representative; node = next_node){
+    next_node = node->representative;
+    node->representative = representative;
+  }
+
   return representative;
 }
 
@@ -265,9 +260,19 @@ static void add_edge(hash_table_t *hash_table,hash_table_node_t *from,const char
 {
   hash_table_node_t *to,*from_representative,*to_representative;
   adjacency_node_t *link;
-
+// slide 292 do power point
   to = find_word(hash_table,word,0);
-  //
+
+  if(to == NULL){
+    return 0;
+  }
+  // search for word in HT - dinf_word
+  // return, if not found
+  // two words in HT
+  // increase numver of edges
+  // edge from -> to
+  // allocate adjcencynode for to word
+  // inittialize adjcencynode 
   // complete this
   //
 }
