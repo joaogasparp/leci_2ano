@@ -1,0 +1,13 @@
+GAS LISTING coretimer.s 			page 1
+
+
+DEFINED SYMBOLS
+         coretimer.s:7      *ABS*:000000000000000b READ_CORE_TIMER
+         coretimer.s:8      *ABS*:000000000000000c RESET_CORE_TIMER
+         coretimer.s:9      *ABS*:0000000000000003 PUT_CHAR
+         coretimer.s:10     *ABS*:0000000000000006 PRINT_INT
+         coretimer.s:15     .text:0000000000000000 main
+         coretimer.s:21     .text:000000000000000c while1
+         coretimer.s:24     .text:0000000000000014 while2
+
+NO UNDEFINED SYMBOLS
