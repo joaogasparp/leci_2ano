@@ -8,7 +8,7 @@
         .globl main
 
 main:   li $t0,0
-        
+
 while1: li $v0,RESET_CORE_TIMER
         syscall
 
@@ -29,7 +29,7 @@ end:    move $a0,$t0
 
         jr $ra
 
-        
+
 delay:  move $t1,$a0
 
         li $v0,RESET_CORE_TIMER
