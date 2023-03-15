@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="-1933.5571095571095" y="295.49533799533793">ementas.PratoVegetariano</node>
+    <node x="-1365.0" y="166.0">ementas.Prato</node>
+    <node x="-1394.0" y="-191.0">ementas.Ementa</node>
+    <node x="-1200.0" y="479.0">ementas.Pedido</node>
+    <node x="-1877.2144522144524" y="569.0">ementas.OvoLacto</node>
+    <node x="-982.0" y="582.0">ementas.Cliente</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ementas.Pedido" target="ementas.Cliente" relationship="TO_ONE">
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+    <edge source="ementas.Pedido" target="ementas.Prato" relationship="TO_MANY">
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+    <edge source="ementas.PratoVegetariano" target="ementas.Prato" relationship="GENERALIZATION">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="ementas.Ementa" target="ementas.Prato" relationship="TO_MANY">
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8755102040816326" showDependencies="true" x="-1163.9999999999995" y="299.00000000000006" />
+  <SelectedNodes>
+    <node>ementas.OvoLacto</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>Project Files</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
