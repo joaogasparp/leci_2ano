@@ -1,0 +1,94 @@
+
+
+SPI:
+full Duplex
+Master-slave
+ponto a ponto
+relogio Explicito no master
+
+Clock, MOSIM, MISO e SS(slave select)
+
+
+I2C
+
+Half duplex
+Multi master
+multi ponto
+Relógio explícito mutuamente-sincronizado
+SDA, SDC
+Start adress tipo 	Adk(slave):
+		(tipo 0)escrita-> data ack(slave)...stop
+		(tipo 1)leitura-> data ack(Master)..nack(master)stop
+
+CAn
+
+half duplex
+Multi master->Broadcast
+relogio implicito
+se a dif potenceial entre os dois fio(dh e dl) for 0V e 1
+bit se for de 2V(depende) E 0 bit
+
+bit stuffing -> 5 bit meter um inverso
+COmo e broadcast os nos tem um acceptance filter(para filtrar 
+so as mensagens que quer)
+
+Mask e o chefe se tiver a 0 aceita
+se for 1 os outros tem e de ser iguais(if e filtro)
+
+RS-232C
+
+full duplex
+ponto a ponto
+relogio implicito(sincronizado no inicio de cada trama) 
+start bit(0) 5 a9 bits de data parity e depois 1 ou 2 stop
+bits sao validados no meio e lidos no inicio
+Erro de fase e • Erro provocado por desvio de frequência
+aumentar fator de sobreamostragem para corrrigir
+
+SRam
+6 transitores por cada bit
+
+2^axnbit -> 2^axn*mbit   m circuitos
+2^axnbit -> 2^a+bxnbit   2^b circuitos
+
+
+DRAN
+1 transitor + 1 condensador
+tem que haver refresh na leitura para repor o valor
+Ras, CAS(que tbm funciona como select)
+
+2^axnbit -> 2^axn*mbit   m circuito
+2^axnbit -> 2^a+bxnbit   2^b circuitos
+(igual a estatica)
+  
+
+cache
+T_access = hit_ratio * hit_timee +(1-hit_ratio) * (hit_time +t_men)
+
+cache com Mapeamento assosiativo:
+valid miss diz se e copiada de alguma cena da memoria main
+tag memory(13 bits)-> para saber o bloco da main
+
+
+cache com Mapeamento Direto:
+Organizada por grupos
+tag memory(5 bits)
+
+cache com Mapeamento Parcialmente assosiativo:
+e como o direto mas tem mais espaco para guardar blocos na cache
+
+Write-throght:
+e escrito na memoria principal e na cacbe(ex de hit)
+se for miss so escreve na memoria e chama se write-no-allocate
+
+write-Back:
+e escrito na cache so e escrito na memoria quando a cache e substituida
+usa dirty bit para indicar ao gestor de memoria que esta bloco da cache mudou 
+e que se for eleminado tem de mudar na memoria
+
+
+
+Je ne cest pas
+fator de divisao ka e kb
+as minhas erradas
+ex 24 -> 2012 normal
