@@ -1,3 +1,4 @@
+        .data
         .equ READ_CORE_TIMER,11
         .equ RESET_CORE_TIMER,12
         .equ PRINT_STR,8
@@ -6,7 +7,6 @@ str10:  .asciiz "cnt10: "
 str5:   .asciiz "cnt5: "
 str1:   .asciiz "cnt1: "
 n:      .asciiz "\n"
-        .data
         .text
         .globl main
 
@@ -19,8 +19,8 @@ main:   li $t0,0
 
 while:  addiu $t0,$t0,1
         li $v0,PRINT_STR
-	    la $a0,str1
-	    syscall
+	la $a0,str1
+	syscall
         
         move $a0,$t7
         jal delay
@@ -48,3 +48,4 @@ while2: li $v0,READ_CORE_TIMER      # readCoreTimer();
         syscall                     # readCoreTimer();
         ble $v0,$a0,while2          # while(readCoreTimer() < 20000 * ms);
         jr $ra
+        
