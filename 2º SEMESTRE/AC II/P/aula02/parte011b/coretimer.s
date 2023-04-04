@@ -35,8 +35,8 @@ while2: li $v0,READ_CORE_TIMER
         li $v0,PUT_CHAR
         syscall
 
-        li $v0,0
-
         j while1
+
+        li $v0,0
 
         jr $ra

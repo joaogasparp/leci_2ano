@@ -14,7 +14,7 @@ main:
         addiu   $sp,$sp,-4      #
         sw  $ra,0($sp)          #
         move    $a0,$t5             #
-        jal delay               # delay(100ms) -> 0,1s Ã  espera
+        jal delay               # delay(100ms) -> 0,1s à espera
         lw  $ra,0($sp)          #
         addiu   $sp,$sp,4       #
         
@@ -64,7 +64,7 @@ main:
         syscall                     # printInt(cnt10, 10 | 4 << 16);
 
         li  $v0,3                   #
-        la  $a0,'\r'                #
+        la $a0,'\r'                #
         syscall                     # printStr("\r");
 
         j   while                   # while(1)

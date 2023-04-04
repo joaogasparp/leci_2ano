@@ -1,6 +1,6 @@
         .data
-        .equ inkey, 1
-        .equ putChar, 3
+        .equ inkey,1
+        .equ putChar,3
         .text
         .globl main
 
@@ -8,12 +8,12 @@ main:
 
 do:     li $v0, inkey
         syscall
-        move $a0, $v0
 
-if:     beqz $a0, else
+if:     beqz $v0, else
+        move $a0, $v0
         li $v0, putChar
-        syscall 
-        
+        syscall
+
 else:   li $a0, '.'
         li $v0, putChar
         syscall

@@ -13,4 +13,5 @@ do:     li $v0,getChar
         syscall
 
 while:  bne $a0,'\n',do
+        li $v0,0
         jr $ra
