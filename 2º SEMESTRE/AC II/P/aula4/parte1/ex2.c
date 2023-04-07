@@ -9,7 +9,7 @@ void delay(unsigned int ms)
 int main(void)
 {
     LATE = (LATE & 0xFF87);
-    TRISE = (TRISE & 0xFF87);  10000111
+    TRISE = (TRISE & 0xFF87);
     int count = 0;
 
     while(1)
