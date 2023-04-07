@@ -21,7 +21,7 @@ int main(void)
     TRISD = (TRISD & 0xFF9F);           // configure RD5 to RD6 as outputs
     TRISB = (TRISB | 0x000F);           // configure RB0 to RB3 as inputs
     
-    LATDbits.LATD6 = 1;                 // Select display low
+    LATDbits.LATD6 = 1;                 // Select display high
 
     while(1)
     {
