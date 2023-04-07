@@ -7,7 +7,7 @@ int main(void){
                         //   0     1     2     3     4     5     6     7     8     9     A     B     C     D     E     F    
 
     //reset
-    LATD = (LATD & 0xFF9F);
+    LATD = (LATD & 0xFF9F); 
     LATB = (LATB & 0x80FF);
     // Configure ports
     TRISB = (TRISB | 0x000F);   //in

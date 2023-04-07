@@ -11,6 +11,7 @@
 .data
 .text
 .globl main
+
 main:
     lui     $t1, SFR_BASE_HI #  
     lw      $t2, TRISE($t1) # READ  (Mem_addr = 0xBF880000 + 0x6100) -> obter configuracao de bits 
@@ -21,8 +22,8 @@ main:
     andi    $t2, $t2, 0xFFFE # MODIFY (bit0= (0 means OUTPUT)) -> meter bit 0 como output, logo, a 0
     sw      $t2, TRISD($t1) # WRITE (Write TRISD register) -> guardar configuracao
     li      $t0,0           # v = 0;
-    while:
-    
+
+while:
     lw      $t3,LATE($t1)   # get output bits
     andi    $t3,$t3,0xFFFE # clean output[0] before placing input
     or      $t3,$t3,$t0     # re0 = v
@@ -33,16 +34,19 @@ main:
     or      $t3,$t3,$t0
     sw      $t3,LATD($t1)
 
-    addiu   $sp,$sp,-4      #
-    sw      $ra,0($sp)          #
-    li      $a0,500             #
-    jal     delay               # delay(500) -> 0,5s à espera
-    lw      $ra,0($sp)          #
-    addiu   $sp,$sp,4       #
+    ##
+    addiu   $sp,$sp,-4      #   #
+    sw      $ra,0($sp)              #
+    li      $a0,500                     #
+    jal     delay                       #   # delay(500) -> 0,5s à espera
+    lw      $ra,0($sp)              #
+    addiu   $sp,$sp,4       #   #
+    ##
+
     xori    $t0,$t0,1
-    
     j       while
-jr  $ra
+    
+    jr  $ra
 
 delay:
     # void delay(unsigned int ms)
