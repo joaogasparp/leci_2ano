@@ -1,3 +1,9 @@
+// Dar reset é apenas aos outputs
+// TRISx é para definir com entrada (1) ou saída (2)
+// LATx é para escrever num porto configurado como saída e dar reset
+// PORTx é para ler num porto configurado como entrada
+//
+
 #include <detpic32.h>
 
 void send2displays(unsigned char value)
@@ -7,17 +13,24 @@ void send2displays(unsigned char value)
         0x7C,0x07,0x7F,
         0x67,0x5F,0x7C,
         0x39,0x5E,0x79,0x71};
+    static char displayFlag = 0;
 
-    LATDbits.LATD6 = !LATDbits.LATD6;       // toggle display high   0 | 1
-    LATDbits.LATD5 = !LATDbits.LATD5;       // toggle display low    1 | 0
+    unsigned char digit_low = value & 0x0F;
+    unsigned char digit_high = value >> 4;
 
-    if(LATDbits.LATD6 == 1)                 // select display high
+    if(displayFlag == 0)                    // if "displayFlag" is 0 then send digit_low to display_low
     {
-        LATB = (LATB & 0x80FF) | (display7Scodes[(value & 0xF0) >> 4] << 8);        // send digit_high (dh) to display: dh = value >> 4
+        LATB = (LATB & 0xFF9F) | 0x0020;    // dar reset
+        digit_low = disp7scodes[digit_low];
+        LATB = (LATB & 0X80FF) | (digit_low << 8);
     }else                                   // select display low
     {
-        LATB = (LATB & 0x80FF) | (display7Scodes[(value & 0x0F)] << 8);                 // send digit_low (dl) to display:  dl = value & 0x0F
+        LATB = (LATB & 0x80FF) | 0x0040;    // dar reset
+        digit_high = disp7scodes[digit_high];
+        LATB = (LATB & 0X80FF) | (digit_high << 8);
     }
+
+    displayFlag = ! displayFlag;
 }
 
 void delay(unsigned int ms)

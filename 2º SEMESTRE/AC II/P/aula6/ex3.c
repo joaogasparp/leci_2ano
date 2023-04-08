@@ -1,11 +1,5 @@
 #include <detpic32.h>
 
-void delay(unsigned int ms)
-{
-    resetCoreTimer();
-    while(readCoreTimer() < 20000 * ms);
-}
-
 int main(void)
 {
     TRISBbits.TRISB4 = 1;       // RB4 digital output disconnected
@@ -20,13 +14,19 @@ int main(void)
     AD1CON2bits.SMPI = 0;       // Interrupt is generated after N samples
     AD1CHSbits.CH0SA = 4;       // analog channel (0 to 15)
     AD1CON1bits.ON = 1;         // Enable A/D converter
+    
     while(1)
     {
         AD1CON1bits.ASAM = 1;           // Start conversion
         while(IFS1bits.AD1IF == 0);     // Wait while conversion not done (AD1IF == 0)
-        printInt(ADC1BUF0, 16 | 3 << 16);
-        putChar('\r');
-        delay(1000);
+        int *p = (int *)(&ADC1BUF0);
+        for( int i = 0; i < 16; i++ )
+        {
+            printInt( p[i*4], 10 | 4 << 16 );
+            putChar(' ');
+        }
+        printStr("\n");
+        IFS1bits.AD1IF = 0;
     }
     return 0;
 }
