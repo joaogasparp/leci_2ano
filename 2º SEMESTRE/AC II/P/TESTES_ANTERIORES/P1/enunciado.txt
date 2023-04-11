@@ -1,10 +1,16 @@
-Escreva, em linguagem Assembly, um programa para o PIC32 que, em ciclo infinito, leia o valor presente nos 4 dip-switches (portos RB3 a RB0) e envie para o PC o código ASCII do símbolo hexadecimal correspondente ao complemento lógico do valor binário presente nesses switches (‘0’, ‘1’, ..,’9’, ‘A’, ..’F’) – e.g. se valor dos switches for ”1100” o valor a enviar deve ser o código ASCII de ‘3’.
+Escreva, em linguagem Assembly, um programa para o PIC32 que, em ciclo infinito, leia o valor presente nos 4 dip-switches
+(portos RB3 a RB0) e envie para o PC o código ASCII do símbolo hexadecimal correspondente ao complemento lógico do valor
+binário presente nesses switches (‘0’, ‘1’, ..,’9’, ‘A’, ..’F’) – e.g. se valor dos switches for ”1100” o valor a enviar
+deve ser o código ASCII de ‘3’.
 
 Sempre que é enviado um carater, o valor do LED ligado ao porto RE7 deve ser complementado.
 
-A verificação do valor presente nos switches e respetivo envio para o PC deve ocorrer 4 vezes por segundo. Para este efeito, escreva, também em Assembly, uma função “delay()” que gere um atraso temporal múltiplo de 2ms e que receba como parâmetro o número de 2 milissegundos a esperar.
+A verificação do valor presente nos switches e respetivo envio para o PC deve ocorrer 4 vezes por segundo. Para este efeito,
+escreva, também em Assembly, uma função “delay()” que gere um atraso temporal múltiplo de 2ms e que receba como parâmetro o
+número de 2 milissegundos a esperar.
 
-Comece por programar adequadamente os portos de entrada/saída necessários à correta execução da tarefa. O valor inicial do porto RE7 deve ser '1'.
+Comece por programar adequadamente os portos de entrada/saída necessários à correta execução da tarefa. O valor inicial do
+porto RE7 deve ser '1'.
 
 Endereço dos portos a usar:
 TRISB: 0xBF886040 PORTB: 0xBF886050 LATB: 0xBF886060
