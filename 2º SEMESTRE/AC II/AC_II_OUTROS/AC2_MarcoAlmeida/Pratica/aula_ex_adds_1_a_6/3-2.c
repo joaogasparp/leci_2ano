@@ -8,16 +8,16 @@ int main(void) {
         c = getChar();
         switch (c) {
             case '0':
-                LATE = (LATE & 0XFFF0) | 0X0001;
+                LATE = LATE | 0X0001;
                 break;
             case '1':
-                LATE = (LATE & 0XFFF0) | 0X0002;
+                LATE = LATE | 0X0002;
                 break;
             case '2':
-                LATE = (LATE & 0XFFF0) | 0X0004;
+                LATE = LATE | 0X0004;
                 break;
             case '3':
-                LATE = (LATE & 0XFFF0) | 0X0008;
+                LATE = LATE | 0X0008;
                 break;
             default:
                 LATE = LATE | 0X000F;

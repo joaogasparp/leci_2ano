@@ -15,6 +15,7 @@ main:
         lw      $t0,LATE($t1)   # get output bits
         andi    $t0,$t0,0xFFF0 # reset
         sw      $t0,LATE($t1)   # write
+        
     do:
         li      $v0,2
         syscall             # getChar

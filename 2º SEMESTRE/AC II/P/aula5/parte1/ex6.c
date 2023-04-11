@@ -1,5 +1,5 @@
 // Dar reset é apenas aos outputs
-// TRISx é para definir com entrada (1) ou saída (2)
+// TRISx é para definir com entrada (1) ou saída (0)
 // LATx é para escrever num porto configurado como saída e dar reset
 // PORTx é para ler num porto configurado como entrada
 //
