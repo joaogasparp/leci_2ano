@@ -15,8 +15,8 @@ int main(void)
 
     while(1){
         counter = (counter + 1) % 60;
-        if(counter == 60) counter = 0;
-        delay(500);
-        LATE = (LATE & 0xFF87) | counter
+        if(counter > 60) counter = 0;
+        delay(1000);
+        LATE = (LATE & 0xFF87) | counter;
     }
 }
