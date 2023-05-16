@@ -3,17 +3,6 @@
 volatile int voltage = 0;       // Global variable
 double average = 0;
 
-void configureAll();
-void send2displays(unsigned char value);
-
-int main(void)
-{
-    configureAll();
-    EnableInterrupts();         // Global Interrupt Enable
-    while(1);
-    return 0;
-}
-
 void configureAll()
 {
     // digital I/O
@@ -99,4 +88,12 @@ void send2displays(unsigned char value){
         LATB = ((LATB & 0x80FF) | (display7Scodes[digit_high] << 8));
     }
     displayFlag = !displayFlag;
+}
+
+int main(void)
+{
+    configureAll();
+    EnableInterrupts();         // Global Interrupt Enable
+    while(1);
+    return 0;
 }
