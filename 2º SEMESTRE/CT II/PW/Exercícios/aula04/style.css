@@ -1,0 +1,58 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: blue;
+}
+
+h2 {
+    color: rgb(255, 114, 59);
+    font-style: italic;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h3 {
+    color: rgb(148, 196, 255);
+    font-weight: bolder;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+hr {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 12px;
+    border-color: rgb(84, 161, 255);
+}
+
+a[href="http://www.ua.pt"] {
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+a[href="notebooks.html"] {
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+a[href="transistors.html"] {
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+a[href="http://www.ua.pt"]:hover {
+    font-style: italic;
+    color: orange;
+    background-color: green;
+}
+
+i[vermelho] {
+    color: red;
+    font-weight: bolder;
+}
