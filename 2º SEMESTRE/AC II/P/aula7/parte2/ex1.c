@@ -1,7 +1,5 @@
 #include <detpic32.h>
 
-volatile int leitura;
-
 void delay(unsigned int ms)
 {
     resetCoreTimer();
@@ -10,15 +8,19 @@ void delay(unsigned int ms)
 
 void _int_(27) isr_adc(void)
 {
-    leitura = ADC1BUF0;
+    volatile int adc_value;
+    LATDbits.LATD11 = 0;
+    adc_value = ADC1BUF0;
+    LATDbits.LATD11 = 1;
     AD1CON1bits.ASAM = 1;       // Start A/D conversion
     IFS1bits.AD1IF = 0;         // Reset AD1IF flag de interrupção de ADC
 }
 
 int main(void)
 {
+    TRISDbits.TRISD11 = 0;
+    
     // Configure all:
-
     // digital I/O
     TRISBbits.TRISB4 = 1;
 
@@ -47,9 +49,6 @@ int main(void)
     // all activity is done by the ISR
     while(1)
     {
-        printInt(leitura,10);
-        putChar('\n');
-        delay(1000);
     }
     return 0;
 }
