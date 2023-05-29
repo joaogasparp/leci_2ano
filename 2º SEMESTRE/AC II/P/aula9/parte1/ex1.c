@@ -33,17 +33,12 @@ void configureAll()
     T1CONbits.TON = 1;
 
     // interrupts
-    IPC6bits.AD1IP = 3;     // configure priority of A/D interrupts
-    IEC1bits.AD1IE = 1;     // Enable A/D interrupts
-    IFS1bits.AD1IF = 0;     // Reset timer AD interrupt flag
+    IPC1bits.T1IP = 2;          // Interrupt priority (must be in range [1..6])
+    IEC0bits.T1IE = 1;          // Enable timer T1 interrupts
+    IPC3bits.T3IP = 2;          // Interrupt priority 2
+    IEC0bits.T3IE = 1;          // Enable timer T3 interrupts
 
-    IPC1bits.T1IP = 1;
-    IEC0bits.T1IE = 1;
-    IFS0bits.T1IF = 0;
 
-    IPC3bits.T3IP = 2;
-    IEC0bits.T3IE = 1;
-    IFS0bits.T3IF = 0;
 }
 
 void _int_(4) isr_T1(void)
@@ -68,8 +63,12 @@ void _int_(27) isr_adc(void)
     }
     average = average / 8;
     voltage = (average * 33 + 511) / 1023;
-    putChar(voltage);
+    putChar(toBcd(voltage));
     IFS1bits.AD1IF = 0;         // Reset AD1IF flag
+}
+
+unsigned char toBcd(unsigned char value) {
+    return ((value / 10) << 4) + (value % 10);
 }
 
 void send2displays(unsigned char value){
@@ -93,7 +92,10 @@ void send2displays(unsigned char value){
 int main(void)
 {
     configureAll();
-    EnableInterrupts();         // Global Interrupt Enable
+    IFS0bits.T1IF = 0;      // Reset timer T1 interrupt flag
+    IFS0bits.T3IF = 0;      // Reset timer T3 interrupt flag
+    IFS1bits.AD1IF = 0;     // Reset AD1IF
+    EnableInterrupts();     // Global Interrupt Enable
     while(1);
     return 0;
 }
