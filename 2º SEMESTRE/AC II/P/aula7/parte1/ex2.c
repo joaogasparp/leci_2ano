@@ -34,25 +34,26 @@ void delay(unsigned int ms)
 int main(void)
 {
     unsigned int cnt = 0;
-    TRISBbits.TRISB4 = 1;       // Configure all (digital I/O, analog input, A/D module, interrupts)
+
+    // Configure all (digital I/O, analog input, A/D module, interrupts)
+    TRISBbits.TRISB4 = 1;
     AD1PCFGbits.PCFG4 = 0;
     AD1CON1bits.SSRC = 7;
-
     AD1CON1bits.CLRASAM = 1;
-    
     AD1CON3bits.SAMC = 16;
     AD1CON2bits.SMPI = 0;
     AD1CHSbits.CH0SA = 4;
     AD1CON1bits.ON = 1;
+    IPC6bits.AD1IP = 2;
+    IFS1bits.AD1IF = 0;
+    IEC1bits.AD1IE = 1;
 
     TRISD = (TRISD & 0xFF9F);
     TRISB = (TRISB & 0x80FF);
 
-    IPC6bits.AD1IP = 2;
-    IFS1bits.AD1IF = 0;
-    IEC1bits.AD1IE = 1;
-    
-    EnableInterrupts(); // Global Interrupt Enable
+    // Global Interrupt Enable
+    EnableInterrupts();
+
     while(1)
     {
         if(cnt == 0) // 0, 200 ms, 400 ms, ... (5 samples/second)
