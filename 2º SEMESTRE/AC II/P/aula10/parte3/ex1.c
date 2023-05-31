@@ -19,7 +19,7 @@ int main(void)
     U2MODEbits.ON = 1;
 
     LATDbits.LATD = 0xF7FF;
-    TRISDbits.TRISD = 0xF7FF;
+    TRISDbits.TRISD = 0xF7FF; 1111 0111 1111 1111
 
     while(1)
     {
