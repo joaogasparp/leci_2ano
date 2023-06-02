@@ -1,0 +1,9 @@
+  =>  Template Name    : Zoofari - Zoo & Safari Park Website Template
+
+  =>  Template Link    : https://htmlcodex.com/zoo-website-template
+
+  =>  Template License : https://htmlcodex.com/license (or read the LICENSE.txt file)
+
+  =>  Template Author  : HTML Codex
+
+  =>  Author Website   : https://htmlcodex.com
