@@ -1,0 +1,115 @@
+8 Setembro 2021--------------
+
+1. As vlnas end to end sao 1,6 e 10. Uma vez que estas conseguem sair do seu edificio conectando se diretamente com o terminal destino.
+
+2. Irá exestir duas rotas de omissão uma pelo router A e outra pelo router B, ambas as rotas tem custo 70 uma vez que estas estam direcionadas para ISP1 de custo 50+10+10. O ISP1 e a unica rota de omissão dos routers A e B visto que este tem menor custo que ISP2.
+
+3.Para que o trafego seja encaminhado %50 por um router e 50% por outro e necessario configirar ISP1 e ISP2
+para que as suas metricas sejam iguais e certeficar que o tipo de ambas seja igual 1/2. Por exemplo ambas 50(tipo1) ou 100(tipo2).
+
+5.Para Que haja Interligação ao edificio antigo e necessario que a interfases de C1 e C2 ligadas ao edifico antigo tenham Rip configurado.
+  De seguida estes tem de fazer redestribuição das rotas aprendidas para o resto da rede.
+  E por Fim o C1 e C2 teram de anunciar as saus rotas de omissão para o edificio, se or dinamico,ou tem de ser configurado manualmente.
+ 
+6. Será necessario Criar 8 tuneis em F1, F2, F3 e f4 para o local onde será feita a inspeção neste caso no router A ou B.
+Para que pacotes vindos da vlan 6 sejam obrigados a entrar neste tunel é necessario criar politicas que reencaminhem pacotes da vlan 6 a entrar no tunel.
+
+16 junho 2021----------------------------------------
+
+1. A vlan6 tem conecção com todos os terminais da Vlan6. Ao fazer broadcast este cheagara a todos os equipamentos de vlna6.
+
+2. tera 4 rotas de omissao esta terao todas custo de 53. Pois estaram todas encaminhadas para o router ISP1 
+com custo menor que ISP2 que e de 50 mais s saltos ISP1-> royterA/B -> Router C1/C2.
+
+3. Em primeiro lugar e necessario igualar a metrica para ambos os routers e e necesario que estes tenham um type igual. Neste caso poderiam ambos ser 50 type 1.
+Para alem disto em caso de falha e preciso configurar uma rota estatica configurando esta com custo admistrativo superior a ospf para o ISP3, que será usada 
+em caso falha por parte dos routers ISP1 e ISP2, isto e possivel pois custo admistratico do ospf e menor que o estatico logo o ospf e prioritario.
+
+5.Para Que haja Interligação ao edificio antigo e necessario que a interfases de C1 e C2 ligadas ao edifico antigo tenham Rip configurado.
+  De seguida estes tem de fazer redestribuição das rotas aprendidas para o resto da rede.
+  E por Fim o C1 e C2 teram de anunciar as saus rotas de omissão para o edificio, se or dinamico,ou tem de ser configurado manualmente.
+
+6. A reposta e esta so que com o antigo
+Será necessario Criar 8 tuneis em F1, F2, F3 e f4 para o local onde será feita a inspeção neste caso no router A ou B.
+Para que pacotes vindos da vlan 6 sejam obrigados a entrar neste tunel e necessario criar politicas que reencaminhem pacotes da vlan 6 a entrar no tunel.
+
+10 janeiro 2020-----------------------------------
+1.A redes de Transito anuncia as redes publicas e privadas e não transito apenas as privadas.
+
+2.
+a)
+Preferencia local. 
+Todos os anuncios que venham de C cola se uma preferencia local alta de B media e depois do A minima.
+
+b)
+Usar um filtro par aver se passa no As que usa um satelite. E aumenta a preferencia local do outro.
+
+c)
+<<<<<<< HEAD
+Tem de ser usar filtering em todos os anuncios bgps recebidos. Caso não tenha passsado por A aumentar a local preference do A para que este passe em A.
+
+d)
+Tem de ser usar filtering para impedir que operadores Russos ou EUA chegem ao a destino vindos do brazil. Para isto tem de ser ver se no AS-Path copmeca no Brazil e se passa por algum destes locais.
+
+3.
+a)
+Para comecar sao trocadas mensagens udp, que sao hello messages para anunciar a todos os routers que este pode fazer trocas LDP.
+De Seguida e estabelecidade uma sessao ldp por tcp, depois desta estar estabelecida e mandandado um inicialization message para inicializar e keep alive periodicos para manter a sessao.
+
+b)
+
+c) chupamos
+=======
+Aumentando a preferencia local de A.
+
+d)
+Tem de ser usar filtering para impedir que operadores Russos ou EUA chegem ao a destino vindos do brazil. Para isto tem de ser ver se 
+no AS-Path copmeca no Brazil e se passa por algum destes locais.
+
+GGs faaz tu o resto o boi
+
+14 janeiro 2016-----------------------------------
+
+1.
+Uma relação de vizinhança BGP é iniciada por um dos routers abrindo uma sessão TCP para o endereço do vizinho explicitamente configurado. As primeiras mensagens BGP 
+(sobre TCP) trocadas são as massagens de OPEN que estabelecem a vizinhança BGP (comunciando os números dos AS e opcionalmente definindo as capacidades BGP de cada um). 
+Após o estabelecimento da vizinhança os routers vão trocar rotas BGP (e respetivos atributos) usando mensagens UPDATE. Após a troca de rotas serão periodicamente 
+trocadas mensagens KEEPALIVE para manter a vizinhança (e sessão TCP) ativa. Em caso de erro serão enviadas mensagens NOTIFICATION para notificar o vizinho do respetivo 
+erro.
+
+2.
+a)
+E necessario aplicar um Filtro no Protocolo Bgp, e todos os anúncios de redes IP Japonesas (pré-conhecidas ou redes cujo o atributo BGP AS_PATH comece por um número de 
+uma AS Japonês) e cujo o atributo BGP AS_PATH contenha números de AS Turcos ou Russos deverão ser rejeitadas/negadas (deny). Os números dos AS e respetivos “donos” são 
+públicos e acessíveis (ex: base de dados do RIPE). 
+
+b)
+Todos rotas recebidos do vizinho sem limitações de tráfego deverão ter uma preferência local maior.
+
+c)
+Como a escolha do caminho depende de informação remota não acessível nos anúncios de rotas, deverá contratualizar-se com os operadores vizinhos a marcação dos anúncios 
+BGP com uma comunidade (atributo COMMUNITY) de acordo com o link usado. Localmente, para todos os anúncios recebidos do vizinho em causa, e em função da comunidade 
+(caso exista nos anúncios) deverá definir-se uma preferência local maior ou menor (de acordo com o link usado remotamente).
+
+3.
+a)
+O propósito do LDP é a descoberta de LSR (Label Switching Routers) vizinhos e com eles definir LSP (Label Switched Path)s para todas as redes IP conhecidas. O LDP no 
+processo de descoberta de LSR vizinhos usa mensagens Hello (UDP) enviadas em multicast. Após a descoberta de um vizinhos, um router cria e mantém uma sessão LDP usando 
+mensagens Initialization e KeepAlive. De seguida usando mensagens Address anuncia os endereços IP dos seus interfaces. Depois, para cada rede IP que conhece escolhe um 
+label e anuncia-o para os vizinhos usando mensagens Label Mapping. Existem ainda outras mensagens de advertisment de labels e notificação de erros.
+
+b)
+O LDP não suporta reserva de recursos e engenharia de tráfego (TE).
+
+c)
+Deverá ser ativado o protocolo RSVP-TE em todos os interfaces do domínio MPLS, definindo a largura de banda reservável no total e por fluxo. Igualmente é preciso 
+ativar as extensões TE de um protocolo IGP (ex:OSPF-TE ou ISIS-TE) para propagar a informação sobre as capacidades dos diferentes interfaces.
+
+d) n bro
+
+e) nha
+
+4.
+
+N percebo um crlh gl
+>>>>>>> 1036c91d9fba29fc23d658fa7201d3d513608d92
