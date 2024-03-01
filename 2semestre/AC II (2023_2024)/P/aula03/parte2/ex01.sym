@@ -1,0 +1,22 @@
+GAS LISTING ex01.s 			page 1
+
+
+DEFINED SYMBOLS
+              ex01.s:6      *ABS*:000000000000000b READ_CORE_TIMER
+              ex01.s:7      *ABS*:000000000000000c RESET_CORE_TIMER
+              ex01.s:8      *ABS*:000000000000bf88 ADDR_BASE_HI
+              ex01.s:9      *ABS*:0000000000006100 TRISE
+              ex01.s:10     *ABS*:0000000000006110 PORTE
+              ex01.s:11     *ABS*:0000000000006120 LATE
+              ex01.s:12     *ABS*:0000000000006040 TRISB
+              ex01.s:13     *ABS*:0000000000006050 PORTB
+              ex01.s:14     *ABS*:0000000000006060 LATB
+              ex01.s:19     .text:0000000000000000 main
+              ex01.s:31     .text:0000000000000024 while
+              ex01.s:56     .text:0000000000000074 delay
+              ex01.s:43     .text:000000000000004c if
+              ex01.s:47     .text:0000000000000060 else
+              ex01.s:49     .text:0000000000000064 endif
+              ex01.s:59     .text:000000000000007c whiled
+
+NO UNDEFINED SYMBOLS
