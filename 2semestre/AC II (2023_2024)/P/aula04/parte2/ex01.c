@@ -36,5 +36,5 @@ int main(void)
 void delay(unsigned int ms)
 {
     resetCoreTimer();
-    while(readCoreTimer() < 20000);
+    while(readCoreTimer() < 20000 * ms);
 }
