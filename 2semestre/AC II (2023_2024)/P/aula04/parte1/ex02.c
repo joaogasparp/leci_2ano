@@ -4,7 +4,7 @@ void delay(unsigned int ms);
 
 int main(void)
 {
-    LATE = (LATE & 0xFF87);
+    LATE = (LATE & 0xFF87);         // 1111 1111 1000 0111
     TRISE = (TRISE & 0xFF87);
     int count = 0;
 

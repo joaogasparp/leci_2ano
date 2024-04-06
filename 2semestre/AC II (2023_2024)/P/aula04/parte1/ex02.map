@@ -56,7 +56,7 @@ sfrs             0x00000000bf800000 0x0000000000100000
 
 Linker script and memory map
 
-LOAD ex03.o
+LOAD ex02.o
 LOAD /opt/pic32mx/lib/libdetpic32.a
 LOAD /opt/pic32mx/lib/gcc/pic32mx/3.4.4/libgcc.a
 LOAD /opt/pic32mx/lib/libm.a
@@ -371,7 +371,7 @@ LOAD /opt/pic32mx/lib/startup.o
 .text           0x000000009d001400      0x178
                 0x000000009d001400                _text_begin = .
  *(.text .stub .text.* .gnu.linkonce.t.*)
- .text          0x000000009d001400       0xc8 ex03.o
+ .text          0x000000009d001400       0xc8 ex02.o
                 0x000000009d00143c                main
                 0x000000009d001400                delay
  .text          0x000000009d0014c8       0xb0 /opt/pic32mx/lib/startup.o
@@ -491,11 +491,11 @@ LOAD /opt/pic32mx/lib/startup.o
 
 .pdr            0x0000000000000000       0x40
  *(.pdr)
- .pdr           0x0000000000000000       0x40 ex03.o
+ .pdr           0x0000000000000000       0x40 ex02.o
 
 .reginfo        0x0000000000000000       0x18
  *(.reginfo)
- .reginfo       0x0000000000000000       0x18 ex03.o
+ .reginfo       0x0000000000000000       0x18 ex02.o
 
 .stab
  *(.stab)
@@ -517,7 +517,7 @@ LOAD /opt/pic32mx/lib/startup.o
 
 .comment        0x0000000000000000       0x4d
  *(.comment)
- .comment       0x0000000000000000       0x4d ex03.o
+ .comment       0x0000000000000000       0x4d ex02.o
 
 .debug
  *(.debug)
@@ -572,6 +572,6 @@ LOAD /opt/pic32mx/lib/startup.o
 
 /DISCARD/
  *(.note.GNU-stack)
-OUTPUT(ex03.elf elf32-tradlittlemips)
+OUTPUT(ex02.elf elf32-tradlittlemips)
 
 .mdebug.abi32   0x000000009d001590        0x0
