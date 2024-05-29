@@ -51,7 +51,7 @@ void _int_(32) uart(void){
     if(IFS1bits.U2RXIF){
         char c;
         c = U2RXREG;
-        putc(c); 
+        putc(c);
         puts("\n");
         if(c == 'D'){
             PORTEbits.RB7 != PORTEbits.RB7;

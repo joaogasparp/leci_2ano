@@ -1,12 +1,12 @@
 #include <detpic32.h>
 
+void delay(unsigned int ms);
 void send2displays(unsigned int val);
 
-volatile int temp = 0;
+volatile int temp;
 
 int main(void)
 {
-
     TRISD = TRISD & 0xFF9F;
     TRISB = TRISB & 0x80FF;
 
@@ -19,14 +19,14 @@ int main(void)
     AD1CHSbits.CH0SA = 4;
     AD1CON1bits.ON = 1;
 
-    T2CONbits.TCKPS = 2; // 20000000 / (65536 * 120) = 2.54 -> 4 (010)
-    PR2 = 41666;         // ((20000000 / 4) / 120) - 1 = 41666
-    TMR2 = 0;
-    T2CONbits.TON = 1;
+    T3CONbits.TCKPS = 1; // 20000000 / (65536 * 250) = 1 -> 2 (001)
+    PR3 = 39999;         // ((20000000 / 2) / 250) - 1 = 39999
+    TMR3 = 0;
+    T3CONbits.TON = 1;
 
-    IPC2bits.T2IP = 2;
-    IEC0bits.T2IE = 1;
-    IFS0bits.T2IF = 0;
+    IPC3bits.T3IP = 2;
+    IEC0bits.T3IE = 1;
+    IFS0bits.T3IF = 0;
 
     EnableInterrupts();
 
@@ -37,24 +37,31 @@ int main(void)
             ;
 
         int i, media = 0;
-        int *p = (int *)(&ADC1BUF0);
+        int *p = (int *)&ADC1BUF0;
         for (i = 0; i < 2; i++)
         {
             media += p[i * 4];
         }
         media = media / 2;
-        temp = (media * (0x65 - 0x15)) / 1023 + 0x15;
+        temp = (media * (0x73 - 0x07)) / 1023 + 0x07;
 
         IFS1bits.AD1IF = 0;
+        delay(200);
     }
-
     return 0;
 }
 
-void _int_(8) isr_T2(void)
+void _int_(12) isr_T3(void)
 {
     send2displays(temp);
-    IFS0bits.T2IF = 0;
+    IFS0bits.T3IF = 0;
+}
+
+void delay(unsigned int ms)
+{
+    resetCoreTimer();
+    while (readCoreTimer() < 20000 * ms)
+        ;
 }
 
 void send2displays(unsigned int val)
