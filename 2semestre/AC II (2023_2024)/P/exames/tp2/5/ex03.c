@@ -5,7 +5,7 @@ void putstr(char *str);
 
 int main(void)
 {
-    TRISE = TRISE & 0xFF7F;
+    TRISE = TRISE & 0xFF7F; 
     TRISB = TRISB & 0x000F;
 
     U2BRG = 130; // ((20000000 + 8 * 9600) / (16 * 9600)) - 1
@@ -56,11 +56,22 @@ void _int_(32) isr_uart(void)
     {
         char c;
         c = U2RXREG;
-        PORTEbits.RE7 = !PORTEbits.RE7;
+        LATEbits.LATE7 = !LATEbits.LATE7;
 
         if (c == 'D')
         {
             putstr("DSD=");
+            int switches = PORTB & 0x000F;
+            if (switches > 9)
+            {
+                putc('1');
+                putc((switches % 10) + '0');
+            }
+            else
+            {
+                putc(switches + '0');
+            }
+            putc('\n');
         }
     }
     IFS1bits.U2RXIF = 0;
