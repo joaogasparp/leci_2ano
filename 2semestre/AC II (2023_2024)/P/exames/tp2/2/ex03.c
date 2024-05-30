@@ -66,7 +66,7 @@ void putc(char byte2send)
 {
     while (U2STAbits.UTXBF == 1)
         ;
-    U2RXREG = byte2send;
+    U2TXREG = byte2send;
 }
 
 void putStr(char *string)
