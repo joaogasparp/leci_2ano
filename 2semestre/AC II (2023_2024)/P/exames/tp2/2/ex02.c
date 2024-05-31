@@ -16,8 +16,8 @@ int main(void)
     AD1CHSbits.CH0SA = 4;
     AD1CON1bits.ON = 1;
 
-    T2CONbits.TCKPS = 2;    // 20000000 / (65536 * 120) = 2,5 -> 4 (010)
-    PR2 = 41666;            // ((20000000 / 4) / 120) - 1 = 41666
+    T2CONbits.TCKPS = 2; // 20000000 / (65536 * 120) = 2,5 -> 4 (010)
+    PR2 = 41666;         // ((20000000 / 4) / 120) - 1 = 41666
     TMR2 = 0;
     T2CONbits.TON = 1;
 
@@ -52,7 +52,8 @@ void _int_(8) isr_T2(void)
 void delay(unsigned int ms)
 {
     resetCoreTimer();
-    while(readCoreTimer() < 20000 * ms);
+    while (readCoreTimer() < 20000 * ms)
+        ;
 }
 
 void send2displays(unsigned int val)

@@ -1,5 +1,8 @@
 #include <detpic32.h>
 
+void putc(char byte2send);
+void putstr(char *str);
+
 volatile int count;
 
 int main(void)
@@ -38,11 +41,13 @@ void _int_(32) uart(void)
     {
         char c;
         c = U2RXREG;
-        if(c == 'U')
+        if (c == 'U')
         {
-            if(count == 15) count = 0;
+            if (count == 15)
+                count = 0;
             count++;
-        } else if (c == 'R')
+        }
+        else if (c == 'R')
         {
             count = 0;
             putstr("RESET\n");
@@ -55,12 +60,14 @@ void _int_(32) uart(void)
 void putc(char byte2send)
 {
     // wait while UTXBF == 1
-    while(U2STAbits.UTXBF == 1);
+    while (U2STAbits.UTXBF == 1)
+        ;
     // Copy byte2send to the UxTXREG register
     U2TXREG = byte2send;
 }
 
 void putstr(char *str)
 {
-    while(*str) putc(*str++);
+    while (*str)
+        putc(*str++);
 }
