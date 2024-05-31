@@ -2,11 +2,15 @@
 
 void send2displays(unsigned int val);
 void delay(unsigned int ms);
+unsigned char toBcd(unsigned char value);
 
-volatile int temp;
+    volatile int temp;
 
 int main(void)
 {
+    TRISD = TRISD & 0xFF9F;
+    TRISB = TRISB & 0x80FF;
+
     TRISBbits.TRISB4 = 1;
     AD1PCFGbits.PCFG4 = 0;
     AD1CON1bits.SSRC = 7;
@@ -33,8 +37,14 @@ int main(void)
         while (IFS1bits.AD1IF == 0)
             ;
 
-        int media = (ADC1BUF0 + ADC1BUF1) / 2;
-        temp = (media * (0x65 - 0x15) / 1023) + 0x15;
+        int i, media = 0;
+        int *p = (int *)&ADC1BUF0;
+        for (i = 0; i < 2; i++)
+        {
+            media += p[i * 4];
+        }
+        media = media / 2;
+        temp = ((media * 50) + 511) / 1023 + 15;
 
         IFS1bits.AD1IF = 0;
         delay(100);
@@ -45,8 +55,13 @@ int main(void)
 
 void _int_(8) isr_T2(void)
 {
-    send2displays(temp);
-    IFS1bits.AD1IF = 0;
+    send2displays(toBcd(temp));
+    IFS0bits.T2IF = 0;
+}
+
+unsigned char toBcd(unsigned char value)
+{
+    return ((value / 10) << 4) + value % 10;
 }
 
 void delay(unsigned int ms)
