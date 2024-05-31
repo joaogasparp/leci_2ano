@@ -1,15 +1,12 @@
 #include <detpic32.h>
 
 void send2displays(unsigned int val);
+void delay(unsigned int ms);
 
-volatile int temp = 0;
+volatile int temp;
 
 int main(void)
 {
-
-    TRISD = TRISD & 0xFF9F;
-    TRISB = TRISB & 0x80FF;
-
     TRISBbits.TRISB4 = 1;
     AD1PCFGbits.PCFG4 = 0;
     AD1CON1bits.SSRC = 7;
@@ -19,7 +16,7 @@ int main(void)
     AD1CHSbits.CH0SA = 4;
     AD1CON1bits.ON = 1;
 
-    T2CONbits.TCKPS = 2; // 20000000 / (65536 * 120) = 2.54 -> 4 (010)
+    T2CONbits.TCKPS = 2; // 20000000 / (65536 * 120) = 2,5 -> 4 (010)
     PR2 = 41666;         // ((20000000 / 4) / 120) - 1 = 41666
     TMR2 = 0;
     T2CONbits.TON = 1;
@@ -36,16 +33,11 @@ int main(void)
         while (IFS1bits.AD1IF == 0)
             ;
 
-        int i, media = 0;
-        int *p = (int *)(&ADC1BUF0);
-        for (i = 0; i < 2; i++)
-        {
-            media += p[i * 4];
-        }
-        media = media / 2;
-        temp = (media * (0x65 - 0x15)) / 1023 + 0x15;
+        int media = (ADC1BUF0 + ADC1BUF1) / 2;
+        temp = (media * (0x65 - 0x15) / 1023) + 0x15;
 
         IFS1bits.AD1IF = 0;
+        delay(100);
     }
 
     return 0;
@@ -54,7 +46,14 @@ int main(void)
 void _int_(8) isr_T2(void)
 {
     send2displays(temp);
-    IFS0bits.T2IF = 0;
+    IFS1bits.AD1IF = 0;
+}
+
+void delay(unsigned int ms)
+{
+    resetCoreTimer();
+    while (readCoreTimer() < 20000 * ms)
+        ;
 }
 
 void send2displays(unsigned int val)
