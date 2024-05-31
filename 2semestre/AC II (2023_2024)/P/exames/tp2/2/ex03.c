@@ -1,35 +1,30 @@
 #include <detpic32.h>
 
-void putc(char byte2send);
-void putStr(char *string);
-
 volatile int count;
 
 int main(void)
 {
-    TRISE = TRISE & 0xFFE1;
-    LATE = (LATE & 0xFFE1) | (count << 1);
+    count = 15;
 
-    U2BRG = 130; // ((20000000 + 8 * 9600) / (16 * 9600)) - 1 = 130
+    TRISE = TRISE & 0xFFE1; // 1111 1111 1110 0001
+    LATE = LATE & 0xFFE1 | (count << 1);
+
+    U2BRG = 130; // ((20000000 + (8 * 9600)) / (16 * 9600)) - 1 = 130
     U2MODEbits.BRGH = 0;
 
     U2MODEbits.PDSEL = 2;
     U2MODEbits.STSEL = 1;
 
-    U2STAbits.UTXEN = 1;
-    U2STAbits.URXEN = 1;
+    U2STAbits.UT2EN = 1;
+    U2STAbits.UR2EN = 1;
 
     U2MODEbits.ON = 1;
 
     IEC1bits.U2RXIE = 1;
-    IEC1bits.U3TXIE = 0;
     IPC8bits.U2IP = 2;
-    IFS1bits.U2RXIF = 0;
-    U2STAbits.URXISEL = 0;
-
-    EnableInterrupts();
-
-    count = 15;
+    IFS1bits.UxRXIF = 0;
+    IFS1bits.U2TXIF = 0;
+    IFS1bits.U2EIF = 0;
 
     while (1)
         ;
@@ -37,42 +32,35 @@ int main(void)
     return 0;
 }
 
-void _int_(32) isr_uart2(void)
+void _int_(32) uart(void)
 {
-    if (IFS1bits.U2RXIF == 1)
+    if (IEC1bits.U2RXIE)
     {
-        // Read character from FIFO (U2RXREG)
-        char a;
-        a = U2RXREG;
-        if (a == 'U')
+        char c;
+        c = U2RXREG;
+        if(c == 'U')
         {
+            if(count == 15) count = 0;
             count++;
-            if (count == 16)
-            {
-                count = 0;
-            }
-        }
-        else if (a == 'R')
+        } else if (c == 'R')
         {
             count = 0;
-            putStr("RESET");
+            putstr("RESET\n");
         }
-        LATE = (LATE & 0xFFE1) | (count << 1);
-        IFS1bits.U2RXIF = 0;
+        LATE = LATE & 0xFFE1 | (count << 1);
+        IEC1bits.U2RXIE = 0;
     }
 }
 
 void putc(char byte2send)
 {
-    while (U2STAbits.UTXBF == 1)
-        ;
+    // wait while UTXBF == 1
+    while(U2STAbits.UTXBF == 1);
+    // Copy byte2send to the UxTXREG register
     U2TXREG = byte2send;
 }
 
-void putStr(char *string)
+void putstr(char *str)
 {
-    while (*string != '\0')
-    {
-        putc(*string++);
-    }
+    while(*str) putc(*str++);
 }
